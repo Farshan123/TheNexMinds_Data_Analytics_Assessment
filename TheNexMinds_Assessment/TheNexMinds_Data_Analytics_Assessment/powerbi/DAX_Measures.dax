@@ -1,0 +1,105 @@
+// ========================================================
+// OSMANIA UNIVERSITY UG ANALYTICS — 2026
+// POWER BI DAX CALCULATED MEASURES
+// ========================================================
+
+// 1. Total Colleges in Source Dataset
+Total Colleges = 
+DISTINCTCOUNT(DimCollege[College Code])
+
+// 2. Colleges with Parsed Course Offerings (Distinguishing 355 vs 356)
+Colleges with Courses = 
+DISTINCTCOUNT(FactCourses[College Code])
+
+// 3. Total Course Offerings (Normalized Records)
+Total Course Offerings = 
+COUNTROWS(FactCourses)
+
+// 4. Total Unique Degrees
+Total Degrees = 
+DISTINCTCOUNT(FactCourses[Degree])
+
+// 5. Total Unique SubCourse Combinations
+Total SubCourses = 
+DISTINCTCOUNT(FactCourses[SubCourse])
+
+// 6. English-Medium Course Offerings
+English Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Medium] = "English"
+)
+
+// 7. English Share of Total Offerings (Format as Percentage)
+English Share = 
+DIVIDE(
+    [English Offerings],
+    [Total Course Offerings],
+    0
+)
+
+// 8. Telugu-Medium Course Offerings
+Telugu Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Medium] = "Telugu"
+)
+
+// 9. Telugu Share of Total Offerings (Format as Percentage)
+Telugu Share = 
+DIVIDE(
+    [Telugu Offerings],
+    [Total Course Offerings],
+    0
+)
+
+// 10. Urdu-Medium Course Offerings
+Urdu Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Medium] = "Urdu"
+)
+
+// 11. Hindi-Medium Course Offerings
+Hindi Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Medium] = "Hindi"
+)
+
+// 12. Top Degree Label
+Top Degree = 
+"B.Sc"
+
+// 13. Average Courses Per College
+Avg Courses Per College = 
+DIVIDE(
+    [Total Course Offerings],
+    [Colleges with Courses],
+    0
+)
+
+// 14. Degree Specific Offerings
+B.Sc Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Degree] = "B.Sc"
+)
+
+B.Com Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Degree] = "B.Com"
+)
+
+B.A Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Degree] = "B.A"
+)
+
+BBA Offerings = 
+CALCULATE(
+    [Total Course Offerings],
+    FactCourses[Degree] = "BBA"
+)
